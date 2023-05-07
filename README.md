@@ -4,11 +4,15 @@
 
 - run คำสั่งด้านล่าง เพื่อสร้าง file .env
 
-`npm run setup`
+```bash
+npm run setup
+```
 
 - run คำสั่ง เพื่อ install dependencies
 
-`npm install`
+```bash
+npm install
+```
 
 ## วิธีการ run server
 
