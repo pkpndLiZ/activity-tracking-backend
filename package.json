@@ -1,0 +1,30 @@
+{
+  "name": "activity-tracking-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "setup": "./scripts/setup.sh",
+    "build": "babel src -d dist",
+    "dev": "nodemon --exec babel-node src/app.js",
+    "start": "node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.5",
+    "@faker-js/faker": "^7.6.0",
+    "express-swagger-generator": "^1.1.17",
+    "nodemon": "^2.0.22"
+  }
+}

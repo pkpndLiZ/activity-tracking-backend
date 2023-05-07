@@ -1,0 +1,1 @@
+cat .env.example > .env
