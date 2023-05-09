@@ -17,7 +17,13 @@ export const findOne = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  const name = req.body.name;
-  const user = await createUser(name);
-  res.json(user);
+  const user = req.body;
+  let error;
+  try {
+    const newUser = await createUser(user);
+    res.status(201).json(newUser);
+  } catch (err) {
+    error = err;
+    res.status(400).send(error);
+  }
 };
