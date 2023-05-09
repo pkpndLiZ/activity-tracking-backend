@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import User from "../models/users.schema";
 
 const users = [
   {
@@ -31,13 +32,14 @@ export async function getUsers() {
   return users;
 }
 
-export async function createUser(name) {
-  const user = {
-    id: faker.random.numeric(4),
-    name: name,
-  };
-  users.push(user);
-  return user;
+export function createUser(user) {
+  // const user = {
+  //   id: faker.random.numeric(4),
+  //   name: name,
+  // };
+  // users.push(user);
+  const userModel = new User(user);
+  return userModel.save();
 }
 
 export async function getUserById(id) {
