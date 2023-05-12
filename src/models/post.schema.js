@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     enum: ["Biking", "Walking", "Swimming", "Hiking", "Running"],
   },
-  duration: { type: Number, type: Number, required: true },
+  duration: { type: String, type: String, required: true },
   distance: { type: Number, required: true },
   date: { type: String, required: true },
   title: { type: String },
