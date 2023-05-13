@@ -1,7 +1,7 @@
 import Post from "../models/post.schema";
 
 export async function getPosts() {
-  return "This is allPosts that you want ^^";
+  return Post.find();
 }
 
 export function createPost(post) {
