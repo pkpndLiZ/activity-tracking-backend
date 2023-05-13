@@ -1,3 +1,5 @@
+import { posts } from "../fixture/mock-data";
+
 export async function getPosts() {
-  return "This is allPosts that you want ^^";
+  return posts;
 }
