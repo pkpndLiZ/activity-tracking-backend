@@ -1,4 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+const durationSchema = new mongoose.Schema({
+  hr: { type: Number, required: true },
+  min: { type: Number, required: true },
+});
 
 const postSchema = new mongoose.Schema({
   userId: { type: String, required: true },
@@ -9,8 +14,8 @@ const postSchema = new mongoose.Schema({
     type: String,
     enum: ["Biking", "Walking", "Swimming", "Hiking", "Running"],
   },
-  duration: { type: String, type: String, required: true },
   distance: { type: Number, required: true },
+  duration: { type: durationSchema, required: true },
   date: { type: String, required: true },
   title: { type: String },
   description: { type: String },
