@@ -36,7 +36,8 @@ export default function App() {
     if (!imageFile) return;
 
     //ใช้ axios ยิงdataเข้าserver โดยมีbodyเป็นข้อมูลที่รัับมา (imageFile State )
-    Axios.post("http://127.0.0.1:3001", { data: imageFile }).then(() => {
+    //กำหนด key ให้ตรงกับschemaฝั่ง server
+    Axios.post("http://127.0.0.1:3001", { profileImage: imageFile }).then(() => {
       //หลังจากยิงdata ให้ทำอะไรต่อ
       //ทำpreviewImage and setImageFileให้เป็นค่าว่าง เพื่อลบ<img> and file ทิ้ง
       setPreviewImage(null);

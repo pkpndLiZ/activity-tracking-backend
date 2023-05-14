@@ -38,9 +38,10 @@ async function run() {
 
   app.post("/", async (req, res) => {
     try {
-
-        //รับค่าจากbadyที่ถูกส่งมา
-      const fileStr = req.body.data;
+      //รับค่าจากbadyที่ถูกส่งมา
+      const data = req.body
+      //แตกค่าเอาเฉพาะไฟล์รูป
+      const fileStr = req.body.profileImage;
 
       //upload API
       //https://cloudinary.com/documentation/image_upload_api_reference
@@ -50,9 +51,12 @@ async function run() {
         folder: "profile_pic",
         width: "800",
       });
+      //ยัดค่าurlเข้า obj
+      data.profileImage = uploadedResponse.url
+
 
       //เช็คข้อมูลหลังupload
-      console.log(uploadedResponse);
+      console.log(data);
 
       //ส่งข้อความไปหาclient
       res.json({ msg: "Upload complete" });
