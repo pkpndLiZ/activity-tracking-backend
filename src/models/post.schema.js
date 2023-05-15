@@ -19,6 +19,9 @@ const postSchema = new mongoose.Schema({
   date: { type: String, required: true },
   title: { type: String },
   description: { type: String },
+  //เพิ่มวันที่แก้ไขและสถานะ
+  edit_post_date: { type: Date },
+  post_status: {type:Boolean , required: true}
 });
 
 const Post = mongoose.model("Post", postSchema);
