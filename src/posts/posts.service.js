@@ -12,7 +12,7 @@ export function createPost(post) {
 export async function editPost(post,id) {
   try {
     //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(id._id, post, { new: true });
     //สั่งบันทึกลงdbและคืนค่ากลับ
     return updatedPost.save();
   } catch (err) {
@@ -24,7 +24,7 @@ export async function editPost(post,id) {
 export async function deletePost(post,id) {
   try {
     //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(id._id, post, { new: true });
     updatedPost.post_status = false;
     //เช็คข้อมูล
     console.log(updatedUser)
