@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
   //เพิ่มวันที่แก้ไขและสถานะ
-  edit_post_date: { type: Date },
+  timestamps: { type: Boolean },
   post_status: {type:Boolean , required: true}
 });
 

@@ -1,13 +1,13 @@
 import express from "express";
-import { findAll, create, edit, hide } from "./posts.controller";
+import { findAll, create, edit, hide } from "./posts.controller.js";
 const router = express.Router();
 
 router.get("/", findAll);
 
 router.post("/", create);
 
-router.put("/", edit);
+router.put("/:id", edit);
 
-router.delete("/", hide);
+router.delete("/:id", hide);
 
 export default router;

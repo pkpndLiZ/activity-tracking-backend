@@ -1,4 +1,4 @@
-import Post from "../models/post.schema";
+import Post from "../models/post.schema.js";
 
 export async function getPosts() {
   return Post.find();
@@ -9,14 +9,10 @@ export function createPost(post) {
   return postModel.save();
 }
 
-export async function editPost(post) {
+export async function editPost(post,id) {
   try {
-    //ใช้การหาด้วย post._id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(post._id, post, { new: true });
-    //ใส่ค่าวันที่ใหม่ไปให้
-    updatedPost.edit_post_date = new Date()
-    //เช็คข้อมูล
-    console.log(updatedPost)
+    //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     //สั่งบันทึกลงdbและคืนค่ากลับ
     return updatedPost.save();
   } catch (err) {
@@ -25,13 +21,10 @@ export async function editPost(post) {
   }
 }
 
-export async function deletePost(post) {
+export async function deletePost(post,id) {
   try {
-    //ใช้การหาด้วย post._id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(post._id, post, { new: true });
-    //ใส่ค่าวันที่ใหม่ไปให้
-    updatedPost.edit_post_date = new Date()
-    //ใส่สถานะโพสใหม่
+    //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     updatedPost.post_status = false;
     //เช็คข้อมูล
     console.log(updatedUser)
