@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import User from "../models/user.schema";
+import User from "../models/user.schema.js";
 
 const users = [
   {

@@ -12,13 +12,15 @@ export async function createPost(post) {
     //ส่งขึ้นcloud
     const uploadedResponse = await cloudinary.uploader.upload(postImg, {
       folder: "post_pic",
-      format: "webp"
+      format: "webp",
     });
     //ดึงมาจากDataBase
     const postModel = new Post(post);
     //ส่งurlเข้าไป
     postModel.profileImage = uploadedResponse.url;
     //บันทึกค่ากลับ
+    postModel.post_status = true;
+    console.log(postModel);
     return postModel.save();
   } catch (err) {
     console.error(`Failed to create `, err);
@@ -34,7 +36,7 @@ export async function editPost(post, id) {
     //ส่งขึ้นcloud
     const uploadedResponse = await cloudinary.uploader.upload(postImg, {
       folder: "post_pic",
-      format: "webp"
+      format: "webp",
     });
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
     const updatedPost = await Post.findByIdAndUpdate(id._id, post, {

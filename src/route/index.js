@@ -1,6 +1,6 @@
-import UserRouter from "../users/users.router";
-import PostRouter from "../posts/posts.router";
-import logger from "../../middleware/logger";
+import UserRouter from "../users/users.router.js";
+import PostRouter from "../posts/posts.router.js";
+import logger from "../../middleware/logger.js";
 import cors from "cors";
 
 function routers(app) {

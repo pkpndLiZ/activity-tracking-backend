@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config();
 import express from "express";
-import connectDbOrThrowError from "./config/db";
-import routers from "./route";
+import connectDbOrThrowError from "./config/db.js";
+import routers from "./route/index.js";
 
 const app = express();
 const PORT = process.env.API_PORT || 3002;
