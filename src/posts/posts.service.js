@@ -10,7 +10,10 @@ export async function createPost(post) {
     //รับค่าimageUrl
     const postImg = post.imageUrl;
     //ส่งขึ้นcloud
-    const uploadedResponse = await cloudinary.uploader.upload(postImg);
+    const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+      folder: "post_pic",
+      format: "webp"
+    });
     //ดึงมาจากDataBase
     const postModel = new Post(post);
     //ส่งurlเข้าไป
@@ -29,7 +32,10 @@ export async function editPost(post, id) {
     //รับค่าimageUrl
     const postImg = post.imageUrl;
     //ส่งขึ้นcloud
-    const uploadedResponse = await cloudinary.uploader.upload(postImg);
+    const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+      folder: "post_pic",
+      format: "webp"
+    });
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
     const updatedPost = await Post.findByIdAndUpdate(id._id, post, {
       new: true,
