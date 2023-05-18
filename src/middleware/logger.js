@@ -1,7 +1,11 @@
+import dayjs from "dayjs";
+
 export default function logger(req, res, next) {
   //req method และ url ที่ใช้งาน
   console.log(
-    `[Logger]: Requesting to ${req.method} ${req.url} from ${req.ip}`
+    `[Logger]: [${dayjs().toISOString()}] Requesting to ${req.method} ${
+      req.url
+    } from ${req.ip}`
   );
   next();
 }

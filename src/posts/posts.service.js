@@ -1,24 +1,24 @@
 import Post from "../models/post.schema.js";
-import cloudinary from "../../middleware/cloudinary.js";
+import cloudinary from "../middleware/cloudinary.js";
 
 export async function getPosts() {
-  return Post.find();
+  return Post.find().sort({ createdAt: "desc" });
 }
 
 export async function createPost(post) {
   try {
-    //รับค่าimageUrl
-    const postImg = post.imageUrl;
-    //ส่งขึ้นcloud
-    const uploadedResponse = await cloudinary.uploader.upload(postImg, {
-      folder: "post_pic",
-      format: "webp",
-    });
-    //ดึงมาจากDataBase
     const postModel = new Post(post);
-    //ส่งurlเข้าไป
-    postModel.profileImage = uploadedResponse.url;
-    //บันทึกค่ากลับ
+
+    if (post.imageUrl) {
+      const postImg = post.imageUrl;
+      const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+        folder: "post_pic",
+        format: "webp",
+      });
+
+      postModel.imageUrl = uploadedResponse.url;
+    }
+
     postModel.post_status = true;
     console.log(postModel);
     return postModel.save();
