@@ -30,23 +30,25 @@ export async function createPost(post) {
 
 export async function editPost(post, id) {
   try {
-    //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    //รับค่าimageUrl
-    const postImg = post.imageUrl;
-    //ส่งขึ้นcloud
-    const uploadedResponse = await cloudinary.uploader.upload(postImg, {
-      folder: "post_pic",
-      format: "webp",
-    });
+      const updatedPost = await Post.findByIdAndUpdate(id, post, {
+        new: true,
+      });
+
+    if (post.imageUrl) {
+      const postImg = post.imageUrl;
+      const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+        folder: "post_pic",
+        format: "webp",
+      });
+
+      post.profileImage = uploadedResponse.url; //สั่งบันทึกลงdbและคืนค่ากลับ
+
+    }
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
-    const updatedPost = await Post.findByIdAndUpdate(id._id, post, {
-      new: true,
-    });
     //ส่งurlเข้าไป
-    postModel.profileImage = uploadedResponse.url; //สั่งบันทึกลงdbและคืนค่ากลับ
     return updatedPost.save();
   } catch (err) {
-    console.error(`Failed to delete user with ID: ${post._id}`, err);
+    console.error(`Failed to delete user with ID: ${id}`, err);
     throw err;
   }
 }
