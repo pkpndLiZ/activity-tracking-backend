@@ -42,10 +42,9 @@ export async function editPost(post, id) {
           folder: "post_pic",
           format: "webp",
           //สั่งบันทึกลงdbและคืนค่ากลับ
-        },
-        (post.imageUrl = uploadedResponse.url)
-      );
-    }
+        },);
+        post.imageUrl = uploadedResponse.url
+      }
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
     //ส่งurlเข้าไป
     return updatedPost.save();
