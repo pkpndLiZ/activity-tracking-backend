@@ -30,10 +30,10 @@ export async function createPost(post) {
 
 export async function editPost(post, id) {
   try {
-      const updatedPost = await Post.findByIdAndUpdate(id, post, {
-        new: true,
-      });
-
+      const postId = {
+        _id: id
+      }
+      const updatedPost = await Post.findByIdAndUpdate(postId._id, post);
     if (post.imageUrl) {
       const postImg = post.imageUrl;
       const uploadedResponse = await cloudinary.uploader.upload(postImg, {
@@ -48,7 +48,7 @@ export async function editPost(post, id) {
     //ส่งurlเข้าไป
     return updatedPost.save();
   } catch (err) {
-    console.error(`Failed to delete user with ID: ${id}`, err);
+    console.error(`Failed to delete edit with ID: ${postId._id}`, err);
     throw err;
   }
 }
