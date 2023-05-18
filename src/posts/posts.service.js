@@ -33,16 +33,15 @@ export async function editPost(post, id) {
     const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     if (post.imageUrl) {
       const postImg = post.imageUrl;
-      const uploadedResponse = await cloudinary.uploader.upload(
-        postImg,
-        {
-          folder: "post_pic",
-          format: "webp",
-        },);
-        //ส่งurlเข้าไป
-        updatedPost.imageUrl = uploadedResponse.url
-      }
-      //สั่งบันทึกลงdbและคืนค่ากลับ
+      const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+        folder: "post_pic",
+        format: "webp",
+      });
+      //ส่งurlเข้าไป
+      updatedPost.imageUrl = uploadedResponse.url;
+    }
+    //สั่งบันทึกลงdbและคืนค่ากลับ
+    updatedPost.post_status = true;
     return updatedPost.save();
   } catch (err) {
     console.error(`Failed to edit with ID: ${id}`, err);
@@ -53,7 +52,7 @@ export async function editPost(post, id) {
 export async function deletePost(post, id) {
   try {
     //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(id, post, {new: true });
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     updatedPost.post_status = false;
     //เช็คข้อมูล
     console.log(updatedUser);
