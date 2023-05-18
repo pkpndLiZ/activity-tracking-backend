@@ -7,8 +7,8 @@ function routers(app) {
 
   app.use(logger);
   app.get("/", (req, res) => res.send("API ok kk"));
-  app.use("/users", UserRouter);
-  app.use("/posts", PostRouter);
+  app.use("/api/users", UserRouter);
+  app.use("/api/posts", PostRouter);
 
   return app;
 }

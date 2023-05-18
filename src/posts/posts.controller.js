@@ -11,6 +11,7 @@ export const findAll = async (req, res) => {
 
 export const create = async (req, res) => {
   const post = req.body;
+  console.log(post)
   try {
     const newPost = await createPost(post);
     res.status(201).json(newPost);
@@ -21,8 +22,8 @@ export const create = async (req, res) => {
 
 export const edit = async (req, res) => {
   const post = req.body;
-  const id = req.param;
-  console.log(id);
+  const id = req.params.id;
+  console.log(post)
   try {
     const newPost = await editPost(post, id);
     res.status(200).json(newPost);

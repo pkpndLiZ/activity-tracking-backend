@@ -8,7 +8,6 @@ export async function getPosts() {
 export async function createPost(post) {
   try {
     const postModel = new Post(post);
-
     if (post.imageUrl) {
       const postImg = post.imageUrl;
       const uploadedResponse = await cloudinary.uploader.upload(postImg, {
@@ -30,23 +29,22 @@ export async function createPost(post) {
 
 export async function editPost(post, id) {
   try {
-    //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    //รับค่าimageUrl
-    const postImg = post.imageUrl;
-    //ส่งขึ้นcloud
-    const uploadedResponse = await cloudinary.uploader.upload(postImg, {
-      folder: "post_pic",
-      format: "webp",
-    });
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
-    const updatedPost = await Post.findByIdAndUpdate(id._id, post, {
-      new: true,
-    });
-    //ส่งurlเข้าไป
-    postModel.profileImage = uploadedResponse.url; //สั่งบันทึกลงdbและคืนค่ากลับ
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+    if (post.imageUrl) {
+      const postImg = post.imageUrl;
+      const uploadedResponse = await cloudinary.uploader.upload(postImg, {
+        folder: "post_pic",
+        format: "webp",
+      });
+      //ส่งurlเข้าไป
+      updatedPost.imageUrl = uploadedResponse.url;
+    }
+    //สั่งบันทึกลงdbและคืนค่ากลับ
+    updatedPost.post_status = true;
     return updatedPost.save();
   } catch (err) {
-    console.error(`Failed to delete user with ID: ${post._id}`, err);
+    console.error(`Failed to edit with ID: ${id}`, err);
     throw err;
   }
 }
@@ -54,16 +52,14 @@ export async function editPost(post, id) {
 export async function deletePost(post, id) {
   try {
     //ใช้การหาด้วย id และอัพเดตด้วย post  และคืนค่ากลับมาจาก new: true
-    const updatedPost = await Post.findByIdAndUpdate(id._id, post, {
-      new: true,
-    });
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     updatedPost.post_status = false;
     //เช็คข้อมูล
     console.log(updatedUser);
     //สั่งบันทึกลงdbและคืนค่ากลับ
     return updatedPost.save();
   } catch (err) {
-    console.error(`Failed to delete user with ID: ${post._id}`, err);
+    console.error(`Failed to delete user with ID: ${id}`, err);
     throw err;
   }
 }
