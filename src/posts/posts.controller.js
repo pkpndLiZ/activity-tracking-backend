@@ -1,8 +1,21 @@
-import { getPosts, createPost, editPost, deletePost } from "./posts.service.js";
+import { getPosts, getPostById, createPost, editPost, deletePost } from "./posts.service.js";
 
 export const findAll = async (req, res) => {
   try {
     const posts = await getPosts();
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+export const findId = async (req, res) => {
+  const id = req.params.id
+  ;
+  console.log(id)
+  try {
+    const posts = await getPostById(id);
+    console.log(posts)
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).send(err);
