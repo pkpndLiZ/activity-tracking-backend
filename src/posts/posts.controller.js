@@ -21,7 +21,7 @@ export const create = async (req, res) => {
 
 export const edit = async (req, res) => {
   const post = req.body;
-  const id = req.param;
+  const id = req.params.id;
   console.log(id);
   try {
     const newPost = await editPost(post, id);

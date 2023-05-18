@@ -30,19 +30,21 @@ export async function createPost(post) {
 
 export async function editPost(post, id) {
   try {
-      const postId = {
-        _id: id
-      }
-      const updatedPost = await Post.findByIdAndUpdate(postId._id, post);
+    const postId = {
+      _id: id,
+    };
+    const updatedPost = await Post.findByIdAndUpdate(postId._id, post);
     if (post.imageUrl) {
       const postImg = post.imageUrl;
-      const uploadedResponse = await cloudinary.uploader.upload(postImg, {
-        folder: "post_pic",
-        format: "webp",
-      });
-
-      post.profileImage = uploadedResponse.url; //สั่งบันทึกลงdbและคืนค่ากลับ
-
+      const uploadedResponse = await cloudinary.uploader.upload(
+        postImg,
+        {
+          folder: "post_pic",
+          format: "webp",
+          //สั่งบันทึกลงdbและคืนค่ากลับ
+        },
+        (post.imageUrl = uploadedResponse.url)
+      );
     }
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
     //ส่งurlเข้าไป
