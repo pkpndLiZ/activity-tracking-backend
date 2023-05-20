@@ -64,7 +64,7 @@ export async function deletePost(post, id) {
     const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
     updatedPost.post_status = false;
     //เช็คข้อมูล
-    console.log(updatedUser);
+    // console.log(updatedPost);
     //สั่งบันทึกลงdbและคืนค่ากลับ
     return updatedPost.save();
   } catch (err) {
