@@ -9,7 +9,7 @@ export default async function verifyUser(req, res, next) {
   const rawToken = req.headers.authorization;
 
   if (!rawToken) {
-    return res.status(401).send("require token!!");
+    return res.status(401).send("Require Token!!");
   }
 
   const token = rawToken.split(" ").pop();
@@ -21,6 +21,6 @@ export default async function verifyUser(req, res, next) {
 
     next();
   } catch (error) {
-    res.status(401).send("Invalid token: ", error);
+    return res.status(401).send(`Invelid Token: ${error.code}`);
   }
 }
