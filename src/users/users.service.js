@@ -1,4 +1,5 @@
 import User from "../models/user.schema.js";
+import cloudinary from "../middleware/cloudinary.js";
 
 export async function getUsers() {
   return users;
@@ -18,19 +19,27 @@ export function createUser(user) {
 export async function editUser(user, id) {
   try {
     //ดึงมาจากDataBaseและเปลี่ยนแปลงค่า
-    const updateUser = await Post.findByIdAndUpdate(id, user, { new: true });
-    if (user.imageUrl) {
+    console.log("userId editUser: " + id);
+    console.log("userInfo editUser: " + user);
+
+    if (user.userImage) {
       const userImage = user.userImage;
       const uploadedResponse = await cloudinary.uploader.upload(userImage, {
         folder: "user_pic",
         format: "webp",
       });
       //ส่งurlเข้าไป
-      updateUser.userImage = uploadedResponse.url;
+      console.log(uploadedResponse.url);
+      user.userImage = uploadedResponse.url;
     }
-    //สั่งบันทึกลงdbและคืนค่ากลับ
 
-    return updateUser.save();
+    const updateUser = await User.findOneAndUpdate({ userId: id }, user);
+
+    if (!updateUser) {
+      throw new Error("Failed to update user");
+    }
+    console.log("update user:", updateUser);
+    return updateUser;
   } catch (err) {
     console.error(`Failed to edit with ID: ${id}`, err);
     throw err;
