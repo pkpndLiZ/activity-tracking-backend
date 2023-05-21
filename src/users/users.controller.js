@@ -27,3 +27,15 @@ export const create = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+export const edit = async (req, res) => {
+  const user = req.body;
+  const id = req.params.id;
+  console.log(user);
+  try {
+    const newUser = await editUser(user, id);
+    res.status(200).json(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
