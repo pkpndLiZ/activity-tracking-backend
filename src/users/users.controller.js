@@ -1,4 +1,9 @@
-import { getUsers, createUser, getUserById } from "./users.service.js";
+import {
+  getUsers,
+  createUser,
+  getUserById,
+  editUser,
+} from "./users.service.js";
 
 export const findAll = async (req, res) => {
   const users = await getUsers();
@@ -25,5 +30,18 @@ export const create = async (req, res) => {
   } catch (err) {
     error = err;
     res.status(400).send(error);
+  }
+};
+
+export const edit = async (req, res) => {
+  const user = req.body;
+  const id = req.params.id;
+  console.log(user);
+  try {
+    const newUser = await editUser(user, id);
+    res.status(200).json(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
   }
 };
