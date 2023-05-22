@@ -1,3 +1,4 @@
+//libประมวลผลวันที่และเวลา
 import dayjs from "dayjs";
 
 export default function logger(req, res, next) {
@@ -7,5 +8,6 @@ export default function logger(req, res, next) {
       req.url
     } from ${req.ip}`
   );
+  //สั่งให้ไปรันfunctionต่อ
   next();
 }

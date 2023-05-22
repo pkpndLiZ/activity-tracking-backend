@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+//Schemaย่อยของduration
 const durationSchema = new mongoose.Schema({
   hr: { type: Number, required: true },
   min: { type: Number, required: true },
@@ -24,7 +24,7 @@ const postSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//เก็บในcollaction Post
 const Post = mongoose.model("Post", postSchema);
 
 export default Post;

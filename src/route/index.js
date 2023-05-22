@@ -8,6 +8,7 @@ function routers(app) {
 
   app.use(logger);
   app.get("/", (req, res) => res.status(200).send());
+  //เช็คสถานะuser
   app.use("/api/users", verifyUser, UserRouter);
   app.use("/api/posts", PostRouter);
 
