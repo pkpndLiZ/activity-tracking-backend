@@ -1,6 +1,7 @@
 import Post from "../models/post.schema.js";
 import cloudinary from "../middleware/cloudinary.js";
 
+//เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด
 export async function getPosts() {
   return Post.find({ post_status: true }).sort({ createdAt: "desc" });
 }
@@ -19,13 +20,14 @@ export async function getPostByUserId(id) {
 export async function createPost(post) {
   try {
     const postModel = new Post(post);
+    //หากมีรูปให้อัพขึ้นcloudinary
     if (post.imageUrl) {
       const postImg = post.imageUrl;
       const uploadedResponse = await cloudinary.uploader.upload(postImg, {
         folder: "post_pic",
         format: "webp",
       });
-
+      //คืนค่าเป็นurl
       postModel.imageUrl = uploadedResponse.url;
     }
 

@@ -6,12 +6,15 @@ import {
   editUser,
 } from "./users.service.js";
 
+//function สำหรับดูข้อมูลuser
 export const findAll = async (req, res) => {
   const users = await getUsers();
   res.json(users);
 };
 
+//function สำหรับดูข้อมูลuser ตามid
 export const findOne = async (req, res) => {
+  //รับuserIdจากparams
   const id = req.params.id;
   const user = await getUserById(id);
 
@@ -32,7 +35,9 @@ export const findUserPosts = async (req, res) => {
   }
 };
 
+//function สำหรับสร้างUser
 export const create = async (req, res) => {
+  //รับค่าจากinputมา
   const user = req.body;
   let error;
   try {
@@ -44,7 +49,9 @@ export const create = async (req, res) => {
   }
 };
 
+//function สำหรับแก้ไขUser
 export const edit = async (req, res) => {
+  //รับuserIdจากparamsและค่าจากinputมา
   const user = req.body;
   const id = req.params.id;
   console.log(user);
