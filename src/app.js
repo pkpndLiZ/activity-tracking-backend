@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.API_PORT || 3002;
 //ปรับให้รับตามipที่ตั้งเอาไว้ ให่สิทธิ์ผ่านตลอด(cookie,auth)
 const corsOptions = {
-  origin: "http://localhost:3000",
+  // origin: "http://localhost:3000",
   credentials: true,
 };
 

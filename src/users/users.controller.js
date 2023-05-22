@@ -1,3 +1,4 @@
+import { getPostByUserId } from "../posts/posts.service.js";
 import {
   getUsers,
   createUser,
@@ -13,7 +14,6 @@ export const findAll = async (req, res) => {
 
 //function สำหรับดูข้อมูลuser ตามid
 export const findOne = async (req, res) => {
-
   //รับuserIdจากparams
   const id = req.params.id;
   const user = await getUserById(id);
@@ -25,9 +25,18 @@ export const findOne = async (req, res) => {
   }
 };
 
+export const findUserPosts = async (req, res) => {
+  const userId = req.params.id;
+  const posts = await getPostByUserId(userId);
+  if (posts) {
+    return res.json(posts);
+  } else {
+    return res.status(404).send("Posts not found");
+  }
+};
+
 //function สำหรับสร้างUser
 export const create = async (req, res) => {
-
   //รับค่าจากinputมา
   const user = req.body;
   let error;
@@ -42,7 +51,6 @@ export const create = async (req, res) => {
 
 //function สำหรับแก้ไขUser
 export const edit = async (req, res) => {
-
   //รับuserIdจากparamsและค่าจากinputมา
   const user = req.body;
   const id = req.params.id;

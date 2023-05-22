@@ -24,7 +24,7 @@ export const findId = async (req, res) => {
   const id = req.params.id;
   console.log(id);
   try {
-    const posts = await getPostById(id);
+    const posts = await getPostByUserId(id);
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).send(err);

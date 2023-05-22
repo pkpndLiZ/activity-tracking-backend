@@ -3,13 +3,14 @@ import cloudinary from "../middleware/cloudinary.js";
 
 //เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด
 export async function getPosts() {
-  return Post.find({post_status: true}).sort({ createdAt: "desc"});
+  return Post.find({ post_status: true }).sort({ createdAt: "desc" });
 }
 
-//เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด ของuserคนนั้น
-export async function getPostById(id) {
+export async function getPostByUserId(id) {
   try {
-    return Post.find({ userId: id, post_status: true }).sort({ updatedAt: "desc"});
+    return Post.find({ userId: id, post_status: true }).sort({
+      updatedAt: "desc",
+    });
   } catch (err) {
     console.error(`Failed to get post with ID: ${id}`, err);
     throw err;
