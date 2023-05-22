@@ -8,6 +8,7 @@ router.get("/", findAll);
 
 router.get("/:id", findId);
 
+//รับverifyUserก่อนเพิ่มแก้ไขข้อมูล
 router.post("/", verifyUser, create);
 
 router.put("/:id", verifyUser, edit);

@@ -6,6 +6,7 @@ import {
   deletePost,
 } from "./posts.service.js";
 
+//function สำหรับดูข้อมูลfeed
 export const findAll = async (req, res) => {
   try {
     const posts = await getPosts();
@@ -16,7 +17,10 @@ export const findAll = async (req, res) => {
   }
 };
 
+//function สำหรับดูข้อมูลให้หน้าprofile
 export const findId = async (req, res) => {
+  
+  //รับuserIdจากparams
   const id = req.params.id;
   console.log(id);
   try {
@@ -27,7 +31,10 @@ export const findId = async (req, res) => {
   }
 };
 
+//function สำหรับสร้างCard
 export const create = async (req, res) => {
+
+  //รับค่าจากinputมา
   const post = req.body;
   console.log(post);
   try {
@@ -38,7 +45,10 @@ export const create = async (req, res) => {
   }
 };
 
+//function สำหรับแก้ไขCard
 export const edit = async (req, res) => {
+
+  //รับuserIdจากparamsและค่าจากinputมา
   const post = req.body;
   const id = req.params.id;
   console.log(post);
@@ -50,7 +60,10 @@ export const edit = async (req, res) => {
   }
 };
 
+//function สำหรับซ่อนCard
 export const hide = async (req, res) => {
+
+  //รับuserIdจากparamsและค่าจากinputมา
   const post = req.body;
   const id = req.params.id;
   try {

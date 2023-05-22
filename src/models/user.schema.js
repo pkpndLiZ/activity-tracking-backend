@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//เก็บในcollaction User
 const User = mongoose.model("User", userSchema);
 
 export default User;
