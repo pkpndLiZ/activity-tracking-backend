@@ -10,11 +10,9 @@ export function createUser(user) {
   return userModel.save();
 }
 
-// export async function getUserById(id) {
-//   const user = users.find((user) => user.id === id);
-
-//   return user;
-// }
+export async function getUserById(id) {
+  return User.findOne({ userId: id });
+}
 
 export async function editUser(user, id) {
   try {

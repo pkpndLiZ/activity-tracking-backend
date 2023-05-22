@@ -1,3 +1,4 @@
+import { getPostByUserId } from "../posts/posts.service.js";
 import {
   getUsers,
   createUser,
@@ -18,6 +19,16 @@ export const findOne = async (req, res) => {
     return res.json(user);
   } else {
     return res.status(404).send("User not found");
+  }
+};
+
+export const findUserPosts = async (req, res) => {
+  const userId = req.params.id;
+  const posts = await getPostByUserId(userId);
+  if (posts) {
+    return res.json(posts);
+  } else {
+    return res.status(404).send("Posts not found");
   }
 };
 

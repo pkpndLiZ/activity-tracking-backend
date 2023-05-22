@@ -2,12 +2,14 @@ import Post from "../models/post.schema.js";
 import cloudinary from "../middleware/cloudinary.js";
 
 export async function getPosts() {
-  return Post.find({post_status: true}).sort({ createdAt: "desc"});
+  return Post.find({ post_status: true }).sort({ createdAt: "desc" });
 }
 
-export async function getPostById(id) {
+export async function getPostByUserId(id) {
   try {
-    return Post.find({ userId: id, post_status: true }).sort({ updatedAt: "desc"});
+    return Post.find({ userId: id, post_status: true }).sort({
+      updatedAt: "desc",
+    });
   } catch (err) {
     console.error(`Failed to get post with ID: ${id}`, err);
     throw err;
