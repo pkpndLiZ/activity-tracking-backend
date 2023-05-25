@@ -1,9 +1,53 @@
 import Post from "../models/post.schema.js";
+import User from "../models/user.schema.js";
 import cloudinary from "../middleware/cloudinary.js";
 
 //เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด
+// export async function getPosts() {
+//   return Post.find({ post_status: true }).sort({ createdAt: "desc" });
+// }
+
 export async function getPosts() {
-  return Post.find({ post_status: true }).sort({ createdAt: "desc" });
+  try {
+    const result = await User.aggregate([
+      {
+        $lookup: {
+          from: "posts", // The name of the Post collection
+          localField: "userId",
+          foreignField: "userId",
+          as: "posts",
+        },
+      },
+      {
+        $unwind: "$posts",
+      },
+      {
+        $project: {
+          userId: 1,
+          username: 1,
+          userImage: 1,
+          "posts._id": 1,
+          "posts.type": 1,
+          "posts.distance": 1,
+          "posts.duration": 1,
+          "posts.date": 1,
+          "posts.title": 1,
+          "posts.description": 1,
+          "posts.post_status": 1,
+        },
+      },
+      {
+        $sort: {
+          "posts.createdAt": -1,
+        },
+      },
+    ]);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.error(`Failed to query posts:`, err);
+    throw err;
+  }
 }
 
 export async function getPostByUserId(id) {
