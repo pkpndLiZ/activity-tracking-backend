@@ -91,6 +91,7 @@ export async function getPostByUserId(id) {
           userId: 1,
           "user.username": 1,
           "user.userImage": 1,
+          imageUrl: 1,
           type: 1,
           distance: 1,
           duration: 1,
