@@ -6,13 +6,24 @@ import {
   createPost,
   editPost,
   deletePost,
+  getPostsByType,
 } from "./posts.service.js";
 
 //function สำหรับดูข้อมูลfeed
 export const findAll = async (req, res) => {
   try {
     const posts = await getPosts();
-    // console.log(posts);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+export const findPostsByType = async (req, res) => {
+  try {
+    const type = req.query.activity;
+    console.log(type);
+    const posts = await getPostsByType(type);
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).send(err);
@@ -38,7 +49,6 @@ export const create = async (req, res) => {
   const post = req.body;
   console.log(post);
   try {
-    
     const newPost = await createPost(post);
     res.status(201).json(newPost);
   } catch (err) {

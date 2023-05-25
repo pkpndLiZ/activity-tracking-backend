@@ -116,6 +116,20 @@ export async function getPostByUserId(id) {
   }
 }
 
+export async function getPostsByType(type) {
+  const query = {}; 
+
+  if (type) {
+    query.type = type;
+  }
+  try {
+    return Post.find(query).sort({ createdAt: "desc" });
+  } catch (err) {
+    console.error("Failed to get posts by type:", err);
+    throw err;
+  }
+}
+
 export async function createPost(post) {
   try {
     const postModel = new Post(post);
