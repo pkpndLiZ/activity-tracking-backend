@@ -1,6 +1,7 @@
 import Post from "../models/post.schema.js";
 import User from "../models/user.schema.js";
 import cloudinary from "../middleware/cloudinary.js";
+import mongoose from "mongoose";
 
 //เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด
 // export async function getPosts() {
@@ -27,6 +28,7 @@ export async function getPosts() {
           username: 1,
           userImage: 1,
           "posts._id": 1,
+          "posts.imageUrl": 1,
           "posts.type": 1,
           "posts.distance": 1,
           "posts.duration": 1,
@@ -107,6 +109,7 @@ export async function getPostByUserId(id) {
 }
 
 export async function createPost(post) {
+  const userId = mongoose.Types.ObjectId(post.userId);
   try {
     const postModel = new Post(post);
     //หากมีรูปให้อัพขึ้นcloudinary
@@ -119,7 +122,7 @@ export async function createPost(post) {
       //คืนค่าเป็นurl
       postModel.imageUrl = uploadedResponse.url;
     }
-
+    postModel.userId = userId;
     postModel.post_status = true;
     console.log(postModel);
     return postModel.save();
