@@ -12,7 +12,9 @@ import {
 //function สำหรับดูข้อมูลfeed
 export const findAll = async (req, res) => {
   try {
-    const posts = await getPosts();
+    const type = req.query.activity;
+    console.log(type);
+    const posts = await getPosts(type);
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).send(err);

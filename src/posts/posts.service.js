@@ -9,7 +9,15 @@ import { getUserById } from "../users/users.service.js";
 //   return Post.find({ post_status: true }).sort({ createdAt: "desc" });
 // }
 
-export async function getPosts() {
+export async function getPosts(type) {
+  let condition = {
+    "posts.post_status": true,
+  };
+
+  if (type) {
+    condition = { ...condition, "posts.type": type };
+  }
+
   try {
     const result = await User.aggregate([
       {
@@ -24,9 +32,7 @@ export async function getPosts() {
         $unwind: "$posts",
       },
       {
-        $match: {
-          "posts.post_status": true,
-        },
+        $match: condition,
       },
       {
         $project: {
@@ -117,7 +123,7 @@ export async function getPostByUserId(id) {
 }
 
 export async function getPostsByType(type) {
-  const query = {}; 
+  const query = {};
 
   if (type) {
     query.type = type;

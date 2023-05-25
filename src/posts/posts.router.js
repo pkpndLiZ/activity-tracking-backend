@@ -1,13 +1,19 @@
 import express from "express";
 import verifyUser from "../middleware/verifyUser.js";
 
-import { findAll, findId, create, edit, hide,findPostsByType } from "./posts.controller.js";
+import {
+  findAll,
+  findId,
+  create,
+  edit,
+  hide,
+  findPostsByType,
+} from "./posts.controller.js";
 const router = express.Router();
-
 
 router.get("/:id", findId);
 
-router.get("/", findPostsByType);
+// router.get("/", findPostsByType);
 
 router.get("/", findAll);
 
@@ -15,7 +21,6 @@ router.get("/", findAll);
 router.post("/", verifyUser, create);
 
 router.put("/:id", verifyUser, edit);
-
 
 router.delete("/:id", verifyUser, hide);
 
