@@ -7,15 +7,12 @@ const durationSchema = new mongoose.Schema({
 
 const postSchema = new mongoose.Schema(
   {
-    // userId: { type: String, required: true },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    // username: { type: String, required: true },
-    // userImage: { type: String },
-    // imageUrl: { type: String },
+    imageUrl: { type: String },
     type: {
       type: String,
       enum: ["Biking", "Walking", "Swimming", "Hiking", "Running"],
