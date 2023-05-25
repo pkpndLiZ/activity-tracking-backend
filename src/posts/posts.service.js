@@ -2,6 +2,7 @@ import Post from "../models/post.schema.js";
 import User from "../models/user.schema.js";
 import cloudinary from "../middleware/cloudinary.js";
 import mongoose from "mongoose";
+import { getUserById } from "../users/users.service.js";
 
 //เลือกCardที่มีสถานะเป็นtrueและเรียงด้วยcreatedAtจากเวลาล่าสุด
 // export async function getPosts() {
@@ -44,7 +45,7 @@ export async function getPosts() {
         },
       },
     ]);
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (err) {
     console.error(`Failed to query posts:`, err);
@@ -65,11 +66,11 @@ export async function getPosts() {
 
 export async function getPostByUserId(id) {
   try {
-    const userId = id;
+    // const user = await getUserById(id);
     const result = Post.aggregate([
       {
         $match: {
-          userId: userId,
+          userId: id,
         },
       },
       {
@@ -110,9 +111,11 @@ export async function getPostByUserId(id) {
 }
 
 export async function createPost(post) {
-  const userId = mongoose.Types.ObjectId(post.userId);
   try {
     const postModel = new Post(post);
+    console.log(postModel);
+    const user = await getUserById(post.userId);
+    postModel.userId = user.userId;
     //หากมีรูปให้อัพขึ้นcloudinary
     if (post.imageUrl) {
       const postImg = post.imageUrl;
@@ -123,7 +126,6 @@ export async function createPost(post) {
       //คืนค่าเป็นurl
       postModel.imageUrl = uploadedResponse.url;
     }
-    postModel.userId = userId;
     postModel.post_status = true;
     console.log(postModel);
     return postModel.save();

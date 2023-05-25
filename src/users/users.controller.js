@@ -29,7 +29,7 @@ export const findUserPosts = async (req, res) => {
   const userId = req.params.id;
   try {
     const posts = await getPostByUserId(userId);
-    console.log(posts);
+    // console.log(posts);
     return res.json(posts);
   } catch (err) {
     return res.status(404).send(err);
@@ -55,12 +55,12 @@ export const edit = async (req, res) => {
   //รับuserIdจากparamsและค่าจากinputมา
   const user = req.body;
   const id = req.params.id;
-  console.log(user);
+  // console.log(user);
   try {
     const newUser = await editUser(user, id);
     res.status(200).json(newUser);
   } catch (err) {
     res.status(500).send(err);
-    console.log(err);
+    // console.log(err);
   }
 };
