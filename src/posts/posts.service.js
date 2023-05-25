@@ -24,6 +24,11 @@ export async function getPosts() {
         $unwind: "$posts",
       },
       {
+        $match: {
+          "posts.post_status": true,
+        },
+      },
+      {
         $project: {
           userId: 1,
           username: 1,
@@ -71,6 +76,7 @@ export async function getPostByUserId(id) {
       {
         $match: {
           userId: id,
+          "posts.post_status": true,
         },
       },
       {
