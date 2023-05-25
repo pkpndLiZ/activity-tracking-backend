@@ -27,11 +27,12 @@ export const findOne = async (req, res) => {
 
 export const findUserPosts = async (req, res) => {
   const userId = req.params.id;
-  const posts = await getPostByUserId(userId);
-  if (posts) {
+  try {
+    const posts = await getPostByUserId(userId);
+    console.log(posts);
     return res.json(posts);
-  } else {
-    return res.status(404).send("Posts not found");
+  } catch (err) {
+    return res.status(404).send(err);
   }
 };
 

@@ -50,11 +50,56 @@ export async function getPosts() {
   }
 }
 
+// export async function getPostByUserId(id) {
+//   try {
+//     return Post.find({ userId: id, post_status: true }).sort({
+//       updatedAt: "desc",
+//     });
+//   } catch (err) {
+//     console.error(`Failed to get post with ID: ${id}`, err);
+//     throw err;
+//   }
+// }
+
 export async function getPostByUserId(id) {
   try {
-    return Post.find({ userId: id, post_status: true }).sort({
-      updatedAt: "desc",
-    });
+    const userId = id;
+    const result = Post.aggregate([
+      {
+        $match: {
+          userId: userId,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "userId",
+          as: "user",
+        },
+      },
+      {
+        $sort: {
+          _id: -1,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          userId: 1,
+          "user.username": 1,
+          "user.userImage": 1,
+          type: 1,
+          distance: 1,
+          duration: 1,
+          date: 1,
+          title: 1,
+          description: 1,
+        },
+      },
+    ]);
+    // console.log(result);
+    return result;
   } catch (err) {
     console.error(`Failed to get post with ID: ${id}`, err);
     throw err;
