@@ -7,9 +7,11 @@ const durationSchema = new mongoose.Schema({
 
 const postSchema = new mongoose.Schema(
   {
-    userId: { type: String, required: true },
-    username: { type: String, required: true },
-    userImage: { type: String },
+    userId: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
     imageUrl: { type: String },
     type: {
       type: String,

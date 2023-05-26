@@ -1,16 +1,20 @@
+import User from "../models/user.schema.js";
+import { getUserById } from "../users/users.service.js";
 import {
   getPosts,
   getPostById,
   createPost,
   editPost,
   deletePost,
-  getPostsByType
+  getPostsByType,
 } from "./posts.service.js";
 
 //function สำหรับดูข้อมูลfeed
 export const findAll = async (req, res) => {
   try {
-    const posts = await getPosts();
+    const type = req.query.activity;
+    console.log(type);
+    const posts = await getPosts(type);
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).send(err);
@@ -30,7 +34,6 @@ export const findPostsByType = async (req, res) => {
 
 //function สำหรับดูข้อมูลให้หน้าprofile
 export const findId = async (req, res) => {
-  
   //รับuserIdจากparams
   const id = req.params.id;
   console.log(id);
@@ -44,7 +47,6 @@ export const findId = async (req, res) => {
 
 //function สำหรับสร้างCard
 export const create = async (req, res) => {
-
   //รับค่าจากinputมา
   const post = req.body;
   console.log(post);
@@ -52,17 +54,17 @@ export const create = async (req, res) => {
     const newPost = await createPost(post);
     res.status(201).json(newPost);
   } catch (err) {
+    console.log("post erreor:", err);
     res.status(400).send(err);
   }
 };
 
 //function สำหรับแก้ไขCard
 export const edit = async (req, res) => {
-
   //รับuserIdจากparamsและค่าจากinputมา
   const post = req.body;
   const id = req.params.id;
-  console.log(post);
+  // console.log(post);
   try {
     const newPost = await editPost(post, id);
     res.status(200).json(newPost);
@@ -73,7 +75,6 @@ export const edit = async (req, res) => {
 
 //function สำหรับซ่อนCard
 export const hide = async (req, res) => {
-
   //รับuserIdจากparamsและค่าจากinputมา
   const post = req.body;
   const id = req.params.id;
