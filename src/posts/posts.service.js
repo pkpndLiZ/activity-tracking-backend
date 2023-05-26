@@ -78,11 +78,10 @@ export async function getPosts(type) {
 export async function getPostByUserId(id) {
   try {
     // const user = await getUserById(id);
-    const result = Post.aggregate([
+    const result = await Post.aggregate([
       {
         $match: {
-          userId: id,
-          "posts.post_status": true,
+          userId: id,          
         },
       },
       {
